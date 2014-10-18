@@ -17,7 +17,7 @@ Freifunk-Side of your Internet router.
 Usage
 -----
 
-make interface=eth2
+    make interface=eth2
 
 You may replace eth2 with the interface on your Internet router, you
 connect your FF-KBU-router to.
