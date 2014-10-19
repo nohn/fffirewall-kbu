@@ -12,8 +12,8 @@ iptables: getfastds
 	echo iptables -i $(interface) -A FORWARD -p tcp --dport 123 -j ACCEPT                 >> iptables.txt
 	for ip in $$(cat fastds.txt | sort | uniq);     \
 	do                                              \
-	    echo iptables -A FORWARD -i $(interface) --dst $$ip -j ACCEPT;  \
-	    echo iptables -A FORWARD -i $(interface) --src $$ip -j ACCEPT;  \
+	    echo iptables -i $(interface) -A FORWARD --dst $$ip -j ACCEPT;  \
+	    echo iptables -i $(interface) -A FORWARD --src $$ip -j ACCEPT;  \
 	done                                                                          	      >> iptables.txt
 	echo iptables -i $(interface) -A INPUT -j DROP                                        >> iptables.txt
 	echo iptables -i $(interface) -A FORWARD -j DROP                                      >> iptables.txt
