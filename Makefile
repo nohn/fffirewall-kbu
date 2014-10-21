@@ -21,7 +21,7 @@ clean:
 	rm -f fastds.txt
 	rm -f iptables.txt
 getfastds: clean
-	for i in $$(seq 1 3);                           \
+	for i in $$(seq 1 10);                          \
 	do                                              \
 	   dig +short A fastd$$i.kbu.freifunk.net |     \
 	       egrep "([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*)" \
