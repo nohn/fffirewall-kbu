@@ -2,21 +2,21 @@ ifndef interface
 	$(error interface is not set)
 endif
 iptables: getfastds
-	echo iptables -i $(interface) -A INPUT   -p udp --dport 67:68 --sport 67:68 -j ACCEPT >> iptables.txt
-	echo iptables -i $(interface) -A FORWARD -p udp --dport 67:68 --sport 67:68 -j ACCEPT >> iptables.txt
-	echo iptables -i $(interface) -A INPUT   -p udp --dport 53 -j ACCEPT                  >> iptables.txt
-	echo iptables -i $(interface) -A INPUT   -p tcp --dport 53 -j ACCEPT                  >> iptables.txt
-	echo iptables -i $(interface) -A INPUT   -p tcp --dport 123 -j ACCEPT                 >> iptables.txt
-	echo iptables -i $(interface) -A FORWARD -p udp --dport 53 -j ACCEPT                  >> iptables.txt
-	echo iptables -i $(interface) -A FORWARD -p tcp --dport 53 -j ACCEPT                  >> iptables.txt
-	echo iptables -i $(interface) -A FORWARD -p tcp --dport 123 -j ACCEPT                 >> iptables.txt
+	echo iptables -A INPUT   -i $(interface) -p udp --dport 67:68 --sport 67:68 -j ACCEPT >> iptables.txt
+	echo iptables -A FORWARD -i $(interface) -p udp --dport 67:68 --sport 67:68 -j ACCEPT >> iptables.txt
+	echo iptables -A INPUT   -i $(interface) -p udp --dport 53 -j ACCEPT                  >> iptables.txt
+	echo iptables -A INPUT   -i $(interface) -p tcp --dport 53 -j ACCEPT                  >> iptables.txt
+	echo iptables -A INPUT   -i $(interface) -p tcp --dport 123 -j ACCEPT                 >> iptables.txt
+	echo iptables -A FORWARD -i $(interface) -p udp --dport 53 -j ACCEPT                  >> iptables.txt
+	echo iptables -A FORWARD -i $(interface) -p tcp --dport 53 -j ACCEPT                  >> iptables.txt
+	echo iptables -A FORWARD -i $(interface) -p tcp --dport 123 -j ACCEPT                 >> iptables.txt
 	for ip in $$(cat fastds.txt | sort | uniq);     \
 	do                                              \
-	    echo iptables -i $(interface) -A FORWARD --dst $$ip -j ACCEPT;  \
-	    echo iptables -i $(interface) -A FORWARD --src $$ip -j ACCEPT;  \
+	    echo iptables -A FORWARD -i $(interface) --dst $$ip -j ACCEPT;  \
+	    echo iptables -A FORWARD -i $(interface) --src $$ip -j ACCEPT;  \
 	done                                                                          	      >> iptables.txt
-	echo iptables -i $(interface) -A INPUT -j DROP                                        >> iptables.txt
-	echo iptables -i $(interface) -A FORWARD -j DROP                                      >> iptables.txt
+	echo iptables -A INPUT   -i $(interface) -j DROP                                      >> iptables.txt
+	echo iptables -A FORWARD -i $(interface) -j DROP                                      >> iptables.txt
 clean: 
 	rm -f fastds.txt
 	rm -f iptables.txt
